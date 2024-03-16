@@ -7,7 +7,7 @@ namespace PoseifyTest
 {
     public class RabbitMQSender
     {
-        public void SendMessage(string hostName, string queueName, string message, string guid, string messageType)
+        public void SendMessage(string hostName, string queueName, string message, string guid, string messageType, string user)
         {
             var factory = new ConnectionFactory() { HostName = hostName, UserName = "user", Password = "password" };
             using (var connection = factory.CreateConnection())
@@ -24,7 +24,8 @@ namespace PoseifyTest
                 properties.Headers = new Dictionary<string, object>
             {
                 { "GUID", guid },
-                { "Type", messageType }
+                { "Type", messageType },
+                { "User", user }
             };
 
                 var body = Encoding.UTF8.GetBytes(message);
